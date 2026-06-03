@@ -1,22 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Phone } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 const navLinks = [
-  {
-    label: "Buy",
-    href: "#",
-    children: ["Houses for Sale", "Apartments", "Land", "Commercial"],
-  },
-  {
-    label: "Rent",
-    href: "#",
-    children: ["Houses for Rent", "Apartments", "Short Lets", "Commercial"],
-  },
+  { label: "Buy", children: ["Houses", "Apartments", "Land", "Commercial"] },
+  { label: "Rent", children: ["Long-Term", "Short Lets", "Serviced Apts"] },
   { label: "Invest", href: "#" },
-  { label: "Services", href: "#" },
   { label: "Diaspora", href: "#" },
+  { label: "Services", href: "#" },
 ];
 
 export default function Navbar() {
@@ -25,39 +17,39 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const fn = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-teal-50"
+          ? "bg-[#09090b]/90 backdrop-blur-xl border-b border-white/[0.06]"
           : "bg-transparent"
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+      <nav className="max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="flex items-center justify-between h-16 lg:h-[72px]">
+
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2 cursor-pointer flex-shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-[#0F766E] flex items-center justify-center">
-              <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-white" aria-hidden="true">
-                <path d="M3 9.5L12 3l9 6.5V21H15v-5h-6v5H3V9.5z" fill="currentColor" />
-              </svg>
+          <a href="/" className="flex items-center gap-2.5 cursor-pointer group">
+            <div className="relative w-8 h-8">
+              <div className="absolute inset-0 bg-[#f0a500] rounded-lg opacity-20 group-hover:opacity-30 transition-opacity duration-300 blur-sm" />
+              <div className="relative w-8 h-8 rounded-lg bg-[#f0a500]/10 border border-[#f0a500]/30 flex items-center justify-center">
+                <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4" aria-hidden="true">
+                  <path d="M10 2L2 8v10h5v-6h6v6h5V8L10 2z" fill="#f0a500" />
+                </svg>
+              </div>
             </div>
-            <span
-              className={`font-heading text-lg font-semibold tracking-wide ${
-                scrolled ? "text-[#134E4A]" : "text-white"
-              }`}
-            >
-              Estate<span className="text-[#14B8A6]">Naija</span>
+            <span className="font-heading text-base font-semibold tracking-wider text-white">
+              Estate<span className="text-[#f0a500]">Naija</span>
             </span>
           </a>
 
           {/* Desktop nav */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center">
             {navLinks.map((link) =>
               link.children ? (
                 <div
@@ -66,74 +58,47 @@ export default function Navbar() {
                   onMouseEnter={() => setOpenDropdown(link.label)}
                   onMouseLeave={() => setOpenDropdown(null)}
                 >
-                  <button
-                    className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer ${
-                      scrolled
-                        ? "text-[#134E4A] hover:bg-teal-50 hover:text-[#0F766E]"
-                        : "text-white/90 hover:text-white hover:bg-white/10"
-                    }`}
-                  >
+                  <button className="flex items-center gap-1 px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors duration-200 cursor-pointer">
                     {link.label}
-                    <ChevronDown className="w-3.5 h-3.5" />
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openDropdown === link.label ? "rotate-180" : ""}`} />
                   </button>
                   {openDropdown === link.label && (
-                    <div className="absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-teal-50 py-2 z-50">
-                      {link.children.map((child) => (
-                        <a
-                          key={child}
-                          href="#"
-                          className="block px-4 py-2.5 text-sm text-[#134E4A] hover:bg-teal-50 hover:text-[#0F766E] transition-colors duration-150 cursor-pointer"
-                        >
-                          {child}
+                    <div className="absolute top-full left-0 mt-2 w-44 bg-[#18181b] border border-white/10 rounded-xl shadow-2xl shadow-black/50 py-1.5 z-50">
+                      {link.children.map((c) => (
+                        <a key={c} href="#" className="block px-4 py-2.5 text-sm text-zinc-400 hover:text-white hover:bg-white/5 transition-all duration-150 cursor-pointer">
+                          {c}
                         </a>
                       ))}
                     </div>
                   )}
                 </div>
               ) : (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer ${
-                    scrolled
-                      ? "text-[#134E4A] hover:bg-teal-50 hover:text-[#0F766E]"
-                      : "text-white/90 hover:text-white hover:bg-white/10"
-                  }`}
-                >
+                <a key={link.label} href={link.href} className="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors duration-200 cursor-pointer">
                   {link.label}
                 </a>
               )
             )}
           </div>
 
-          {/* CTA area */}
+          {/* Right CTAs */}
           <div className="hidden lg:flex items-center gap-3">
-            <a
-              href="tel:+2341234567890"
-              className={`flex items-center gap-2 text-sm font-medium transition-colors duration-200 cursor-pointer ${
-                scrolled ? "text-[#0F766E]" : "text-white/90 hover:text-white"
-              }`}
-            >
-              <Phone className="w-4 h-4" />
-              <span>+234 123 456 7890</span>
+            <a href="#" className="text-sm text-zinc-400 hover:text-white transition-colors duration-200 cursor-pointer px-3 py-2">
+              Sign In
             </a>
             <a
               href="#"
-              className="px-5 py-2.5 bg-[#0F766E] hover:bg-[#0D6962] text-white text-sm font-semibold rounded-lg transition-colors duration-200 cursor-pointer"
+              className="relative px-5 py-2.5 text-sm font-semibold text-black bg-[#f0a500] hover:bg-[#d4930a] rounded-xl transition-all duration-200 cursor-pointer overflow-hidden group"
             >
-              List Property
+              <span className="relative z-10">List Property</span>
+              <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
             </a>
           </div>
 
           {/* Mobile toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className={`lg:hidden p-2 rounded-lg cursor-pointer transition-colors duration-200 ${
-              scrolled
-                ? "text-[#134E4A] hover:bg-teal-50"
-                : "text-white hover:bg-white/10"
-            }`}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            className="lg:hidden p-2 text-zinc-400 hover:text-white transition-colors duration-200 cursor-pointer"
+            aria-label="Toggle menu"
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -141,21 +106,14 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="lg:hidden bg-white border-t border-teal-50 py-4 px-2 space-y-1">
+          <div className="lg:hidden bg-[#111113] border border-white/[0.06] rounded-2xl mb-4 py-4 px-2 space-y-1">
             {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href ?? "#"}
-                className="block px-4 py-3 text-sm font-medium text-[#134E4A] rounded-lg hover:bg-teal-50 hover:text-[#0F766E] transition-colors duration-150 cursor-pointer"
-              >
+              <a key={link.label} href={link.href ?? "#"} className="block px-4 py-3 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-xl transition-all duration-150 cursor-pointer">
                 {link.label}
               </a>
             ))}
-            <div className="pt-3 border-t border-teal-50 mt-3">
-              <a
-                href="#"
-                className="block w-full text-center px-5 py-3 bg-[#0F766E] hover:bg-[#0D6962] text-white text-sm font-semibold rounded-lg transition-colors duration-200 cursor-pointer"
-              >
+            <div className="px-2 pt-3 border-t border-white/[0.06] mt-2">
+              <a href="#" className="block w-full text-center py-3 text-sm font-semibold text-black bg-[#f0a500] hover:bg-[#d4930a] rounded-xl transition-colors duration-200 cursor-pointer">
                 List Property
               </a>
             </div>
