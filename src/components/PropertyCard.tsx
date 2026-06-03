@@ -1,90 +1,99 @@
-import { MapPin, BedDouble, Bath, Maximize2, ShieldCheck } from "lucide-react";
+import { MapPin, BedDouble, Bath, Maximize2, ShieldCheck, Heart } from "lucide-react";
 
 export interface Property {
   id: string;
   title: string;
-  location: string;
+  address: string;
   city: string;
   price: string;
+  priceNote?: string;
   type: "For Sale" | "For Rent" | "Short Let" | "Investment";
   beds?: number;
   baths?: number;
   size?: string;
-  imageColor: string;
+  imageBg: string;
   verified: boolean;
   tag?: string;
+  tagColor?: string;
 }
 
-const typeColors: Record<Property["type"], string> = {
-  "For Sale": "bg-[#0F766E] text-white",
-  "For Rent": "bg-[#0369A1] text-white",
-  "Short Let": "bg-violet-600 text-white",
-  Investment: "bg-amber-600 text-white",
+const typeBadge: Record<Property["type"], string> = {
+  "For Sale": "bg-emerald-100 text-emerald-700",
+  "For Rent": "bg-blue-100 text-blue-700",
+  "Short Let": "bg-amber-100 text-amber-700",
+  Investment: "bg-violet-100 text-violet-700",
 };
 
-export default function PropertyCard({ property: p }: { property: Property }) {
+export default function PropertyCard({ p }: { p: Property }) {
   return (
-    <article className="group bg-white rounded-2xl overflow-hidden border border-teal-50 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer">
-      {/* Image placeholder */}
-      <div
-        className="relative h-52 overflow-hidden"
-        style={{ background: p.imageColor }}
-      >
-        <div className="absolute inset-0 flex items-center justify-center">
-          <svg viewBox="0 0 80 60" fill="none" className="w-24 h-24 opacity-20" aria-hidden="true">
-            <rect x="10" y="20" width="60" height="35" rx="3" fill="white" />
-            <polygon points="40,5 5,22 75,22" fill="white" />
-            <rect x="30" y="35" width="20" height="20" fill="currentColor" className="text-white/40" />
-          </svg>
+    <article className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-xl hover:shadow-gray-100/80 transition-all duration-300 cursor-pointer flex flex-col">
+
+      {/* Image */}
+      <div className="relative h-56 overflow-hidden" style={{ background: p.imageBg }}>
+        {/* Placeholder visual */}
+        <div className="absolute inset-0 flex items-end p-4">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
         </div>
-        {/* Listing type badge */}
-        <span className={`absolute top-3 left-3 px-2.5 py-1 text-xs font-bold rounded-lg ${typeColors[p.type]}`}>
-          {p.type}
-        </span>
-        {/* Tag */}
-        {p.tag && (
-          <span className="absolute top-3 right-3 px-2.5 py-1 text-xs font-bold rounded-lg bg-amber-400 text-amber-900">
-            {p.tag}
+
+        {/* Badges */}
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+          <span className={`text-xs font-semibold px-2.5 py-1 rounded-lg ${typeBadge[p.type]}`}>
+            {p.type}
           </span>
-        )}
-        {/* Verified badge */}
+          {p.tag && (
+            <span className={`text-xs font-semibold px-2.5 py-1 rounded-lg ${p.tagColor ?? "bg-amber-400 text-amber-900"}`}>
+              {p.tag}
+            </span>
+          )}
+        </div>
+
+        {/* Save button */}
+        <button className="absolute top-3 right-3 w-8 h-8 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-sm transition-all duration-150 cursor-pointer" aria-label="Save property">
+          <Heart className="w-4 h-4 text-gray-500 hover:text-red-500 transition-colors" />
+        </button>
+
+        {/* Verified */}
         {p.verified && (
-          <span className="absolute bottom-3 right-3 flex items-center gap-1 px-2.5 py-1 bg-white/90 backdrop-blur-sm rounded-lg text-[#0F766E] text-xs font-semibold">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            Verified
-          </span>
+          <div className="absolute bottom-3 right-3 flex items-center gap-1 px-2 py-1 bg-white/95 rounded-lg shadow-sm">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <span className="text-xs font-semibold text-emerald-700">Verified</span>
+          </div>
         )}
       </div>
 
-      {/* Body */}
-      <div className="p-4">
-        <p className="font-heading text-xl font-semibold text-[#0F766E]">{p.price}</p>
-        <h3 className="text-sm font-semibold text-[#134E4A] mt-1 leading-snug group-hover:text-[#0F766E] transition-colors duration-200">
-          {p.title}
-        </h3>
-        <div className="flex items-center gap-1 mt-1.5 text-xs text-[#475569]">
-          <MapPin className="w-3.5 h-3.5 text-[#0F766E] flex-shrink-0" />
-          <span>{p.location}, {p.city}</span>
+      {/* Content */}
+      <div className="p-4 flex flex-col flex-1">
+        <div className="flex items-start justify-between gap-2 mb-1">
+          <p className="text-xl font-bold text-gray-900 leading-tight">{p.price}</p>
+          {p.priceNote && <span className="text-xs text-gray-400 font-medium mt-1 flex-shrink-0">{p.priceNote}</span>}
         </div>
 
-        {/* Features */}
+        <h3 className="text-sm font-semibold text-gray-800 leading-snug mb-1.5 group-hover:text-[#0B4D2C] transition-colors duration-200 line-clamp-2">
+          {p.title}
+        </h3>
+
+        <div className="flex items-center gap-1 text-xs text-gray-500 mb-3">
+          <MapPin className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+          <span>{p.address}, {p.city}</span>
+        </div>
+
         {(p.beds !== undefined || p.baths !== undefined || p.size) && (
-          <div className="flex items-center gap-4 mt-3 pt-3 border-t border-teal-50">
+          <div className="flex items-center gap-4 pt-3 border-t border-gray-100 mt-auto">
             {p.beds !== undefined && (
-              <span className="flex items-center gap-1 text-xs text-[#475569]">
-                <BedDouble className="w-3.5 h-3.5 text-[#0F766E]" />
+              <span className="flex items-center gap-1.5 text-xs text-gray-500">
+                <BedDouble className="w-3.5 h-3.5 text-gray-400" />
                 {p.beds} Beds
               </span>
             )}
             {p.baths !== undefined && (
-              <span className="flex items-center gap-1 text-xs text-[#475569]">
-                <Bath className="w-3.5 h-3.5 text-[#0F766E]" />
+              <span className="flex items-center gap-1.5 text-xs text-gray-500">
+                <Bath className="w-3.5 h-3.5 text-gray-400" />
                 {p.baths} Baths
               </span>
             )}
             {p.size && (
-              <span className="flex items-center gap-1 text-xs text-[#475569]">
-                <Maximize2 className="w-3.5 h-3.5 text-[#0F766E]" />
+              <span className="flex items-center gap-1.5 text-xs text-gray-500">
+                <Maximize2 className="w-3.5 h-3.5 text-gray-400" />
                 {p.size}
               </span>
             )}

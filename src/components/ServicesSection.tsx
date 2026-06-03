@@ -1,86 +1,81 @@
-import { Building2, Key, TrendingUp, ClipboardList, Search, Globe } from "lucide-react";
-import { ArrowRight } from "lucide-react";
+import { Home, Key, TrendingUp, ClipboardList, Globe, Building2, ArrowRight } from "lucide-react";
 
 const services = [
   {
-    icon: Search,
+    icon: Home,
     title: "Property Sales",
-    desc: "Find and acquire residential, commercial, or land properties with our full transaction support.",
+    desc: "Full support from search through closing — offers, negotiations, and documentation.",
     cta: "Browse for Sale",
-    color: "bg-teal-50",
-    iconColor: "text-[#0F766E]",
+    accent: "bg-emerald-50",
+    iconColor: "text-emerald-700",
   },
   {
     icon: Key,
-    title: "Rentals & Lets",
-    desc: "Long-term rentals and short lets across major Nigerian cities. Verified landlords only.",
+    title: "Rentals & Short Lets",
+    desc: "Long-term rentals and short lets across major cities. Verified landlords only.",
     cta: "Browse Rentals",
-    color: "bg-blue-50",
-    iconColor: "text-[#0369A1]",
+    accent: "bg-blue-50",
+    iconColor: "text-blue-700",
   },
   {
     icon: TrendingUp,
-    title: "Investment Opportunities",
+    title: "Investment Advisory",
     desc: "Land banking, off-plan developments, and yield-generating properties for investors.",
     cta: "View Investments",
-    color: "bg-amber-50",
-    iconColor: "text-amber-600",
+    accent: "bg-amber-50",
+    iconColor: "text-amber-700",
   },
   {
     icon: ClipboardList,
     title: "Property Management",
-    desc: "Let us manage your property — tenant screening, rent collection, maintenance, and reporting.",
+    desc: "Tenant screening, rent collection, maintenance coordination, and monthly reporting.",
     cta: "Learn More",
-    color: "bg-violet-50",
-    iconColor: "text-violet-600",
+    accent: "bg-violet-50",
+    iconColor: "text-violet-700",
   },
   {
     icon: Globe,
     title: "Diaspora Services",
-    desc: "Remote property acquisition, title verification, and trusted management for Nigerians abroad.",
+    desc: "Safe property acquisition for Nigerians abroad. Remote inspection, title verification.",
     cta: "Diaspora Portal",
-    color: "bg-teal-50",
-    iconColor: "text-[#0F766E]",
+    accent: "bg-teal-50",
+    iconColor: "text-teal-700",
   },
   {
     icon: Building2,
     title: "Commercial Real Estate",
     desc: "Office spaces, warehouses, retail outlets, and development sites across Nigeria.",
     cta: "View Commercial",
-    color: "bg-slate-50",
-    iconColor: "text-slate-600",
+    accent: "bg-slate-50",
+    iconColor: "text-slate-700",
   },
 ];
 
 export default function ServicesSection() {
   return (
     <section className="py-20 bg-white" aria-label="Our services">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <p className="text-sm font-semibold text-[#0F766E] uppercase tracking-widest mb-2">
-            Our Services
-          </p>
-          <h2 className="font-heading text-3xl lg:text-4xl font-semibold text-[#134E4A] leading-tight mb-4">
-            More Than a Listing Site
-          </h2>
-          <p className="text-[#475569] text-sm leading-relaxed">
-            We are an executing real estate company — we help you find, acquire, manage, and grow
-            your Nigerian property portfolio.
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="text-center max-w-xl mx-auto mb-12">
+          <p className="text-xs font-semibold text-[#0B4D2C] uppercase tracking-widest mb-3">What We Do</p>
+          <h2 className="text-3xl font-bold text-gray-900 tracking-tight mb-3">More Than a Listing Site</h2>
+          <p className="text-gray-500 text-sm leading-relaxed">
+            We are an executing real estate company — helping you find, acquire, manage,
+            and grow your Nigerian property portfolio.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((s) => (
             <div
               key={s.title}
-              className="group relative bg-white rounded-2xl p-6 border border-gray-100 hover:border-[#0F766E]/20 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col"
+              className="group p-6 bg-white border border-gray-100 rounded-2xl hover:border-gray-200 hover:shadow-lg hover:shadow-gray-100/80 transition-all duration-300 cursor-pointer flex flex-col"
             >
-              <div className={`w-12 h-12 rounded-xl ${s.color} flex items-center justify-center mb-4`}>
-                <s.icon className={`w-6 h-6 ${s.iconColor}`} aria-hidden="true" />
+              <div className={`w-11 h-11 ${s.accent} rounded-xl flex items-center justify-center mb-4`}>
+                <s.icon className={`w-5 h-5 ${s.iconColor}`} aria-hidden="true" />
               </div>
-              <h3 className="font-heading text-base font-semibold text-[#134E4A] mb-2">{s.title}</h3>
-              <p className="text-sm text-[#475569] leading-relaxed flex-1">{s.desc}</p>
-              <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-[#0F766E] group-hover:gap-2 transition-all duration-200">
+              <h3 className="text-base font-bold text-gray-900 mb-2">{s.title}</h3>
+              <p className="text-sm text-gray-500 leading-relaxed flex-1">{s.desc}</p>
+              <div className="mt-4 flex items-center gap-1.5 text-sm font-semibold text-[#0B4D2C] group-hover:gap-2.5 transition-all duration-200">
                 {s.cta}
                 <ArrowRight className="w-4 h-4" />
               </div>
